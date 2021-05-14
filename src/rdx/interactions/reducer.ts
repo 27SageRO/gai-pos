@@ -1,3 +1,4 @@
+import {AnyAction} from 'redux';
 import update from 'immutability-helper';
 import actions from 'rdx/rootActions';
 
@@ -58,11 +59,11 @@ export function getActionPurpose(actionType: string) {
 
 const interactionStartReducer = (
   state: InteractionState,
-  action: any,
+  action: AnyAction,
 ): InteractionState => {
   const actionName = getActionName(action.type);
   return update(state, {
-    actionsInProgress: {$set: [...state.actionsInProgress, actionName]},
+    actionsInProgress: {$push: [actionName]},
     actionsInError: {
       $set: state.actionsInError.filter((o) => o.actionName !== actionName),
     },
@@ -71,7 +72,7 @@ const interactionStartReducer = (
 
 const interactionStopReducer = (
   state: InteractionState,
-  action: any,
+  action: AnyAction,
 ): InteractionState => {
   const actionName = getActionName(action.type);
   return update(state, {

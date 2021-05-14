@@ -11,11 +11,6 @@ const postReceiptSuccess = createAction(
   (firebaseId: string, receipt: Receipt) => ({payload: {firebaseId, receipt}}),
 );
 
-export type CartAdd = ReturnType<typeof cartAdd>;
-export type CartDel = ReturnType<typeof cartDel>;
-export type PostReceiptBegin = ReturnType<typeof postReceiptBegin>;
-export type PostReceiptSuccess = ReturnType<typeof postReceiptSuccess>;
-
 export default {
   cartAdd,
   cartDel,

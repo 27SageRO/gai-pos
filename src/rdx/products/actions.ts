@@ -13,13 +13,6 @@ const delProductSuccess = createAction('del/product/success', (id: string) => ({
   payload: {id},
 }));
 
-export type GetProductsBegin = ReturnType<typeof getProductsBegin>;
-export type GetProductsSuccess = ReturnType<typeof getProductsSuccess>;
-export type PostProductBegin = ReturnType<typeof postProductBegin>;
-export type PostProductSuccess = ReturnType<typeof postProductSuccess>;
-export type DelProductBegin = ReturnType<typeof delProductBegin>;
-export type DelProductSuccess = ReturnType<typeof delProductSuccess>;
-
 export default {
   getProductsBegin,
   getProductsSuccess,

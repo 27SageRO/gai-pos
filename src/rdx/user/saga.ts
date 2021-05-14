@@ -4,12 +4,6 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import actions from 'rdx/rootActions';
 
-import type {
-  UserSigninBegin,
-  UserSignupBegin,
-  PutUserProfileBegin,
-} from './actions';
-
 type GetResponse = FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>;
 type PostResponse = FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>;
 
@@ -20,7 +14,7 @@ const isValidEmail = (email: string) => {
 
 const getUserProfile = () => select((state: ReduxState) => state.user.profile);
 
-function* userSignInSaga(action: UserSigninBegin) {
+const userSignInSaga = takeLatest(actions.userSigninBegin, function* (action) {
   const {type, payload} = action;
   try {
     const {email, password} = payload;
@@ -34,9 +28,9 @@ function* userSignInSaga(action: UserSigninBegin) {
   } catch (e) {
     yield put(actions.interactionError(type, e.message));
   }
-}
+});
 
-function* userSignUpSaga(action: UserSignupBegin) {
+const userSignUpSaga = takeLatest(actions.userSignupBegin, function* (action) {
   const {type, payload} = action;
   try {
     if (!isValidEmail(payload.email)) throw new Error('Invalid email format');
@@ -50,24 +44,23 @@ function* userSignUpSaga(action: UserSignupBegin) {
   } catch (e) {
     yield put(actions.interactionError(type, e.message));
   }
-}
+});
 
-function* updateProfileSaga(action: PutUserProfileBegin) {
-  const {type, payload} = action;
-  try {
-    const userProfile: UserProfile = yield getUserProfile();
-    yield firestore()
-      .collection('Users')
-      .doc(userProfile.email)
-      .update({...payload});
-    yield put(actions.putUserProfileSuccess(payload));
-  } catch (e) {
-    yield put(actions.interactionError(type, e.message));
-  }
-}
+const updateProfileSaga = takeLatest(
+  actions.putUserProfileBegin,
+  function* (action) {
+    const {type, payload} = action;
+    try {
+      const userProfile: UserProfile = yield getUserProfile();
+      yield firestore()
+        .collection('Users')
+        .doc(userProfile.email)
+        .update({...payload});
+      yield put(actions.putUserProfileSuccess(payload));
+    } catch (e) {
+      yield put(actions.interactionError(type, e.message));
+    }
+  },
+);
 
-export default [
-  takeLatest(actions.userSigninBegin.type, userSignInSaga),
-  takeLatest(actions.userSignupBegin.type, userSignUpSaga),
-  takeLatest(actions.putUserProfileBegin.type, updateProfileSaga),
-];
+export default [userSignInSaga, userSignUpSaga, updateProfileSaga];

@@ -4,8 +4,8 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {Input, InputMask, MaterialIcons, Modal} from 'components';
 import {BarCodeReadEvent, RNCamera} from 'react-native-camera';
 import {useDispatch, useSelector} from 'react-redux';
-import actions from 'rdx/rootActions';
 import {getError, getInProgress} from 'rdx/interactions/selectors';
+import actions from 'rdx/rootActions';
 import BarcodeMask from 'react-native-barcode-mask';
 import R from 'res/R';
 
@@ -36,11 +36,11 @@ export default memo(
     );
 
     const inProgress = useSelector((state: ReduxState) =>
-      getInProgress(state, actions.postProductBegin.type),
+      getInProgress(state, actions.postProductBegin),
     );
 
     const error = useSelector((state: ReduxState) =>
-      getError(state, actions.postProductBegin.type),
+      getError(state, actions.postProductBegin),
     );
 
     const dispatch = useDispatch();

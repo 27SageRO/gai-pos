@@ -19,11 +19,11 @@ export default function RegisterScreen({navigation}: Props) {
   const [repassword, setRepassword] = useState('');
 
   const error = useSelector((state: ReduxState) =>
-    getError(state, actions.userSignupBegin.type),
+    getError(state, actions.userSignupBegin),
   );
 
   const inProgress = useSelector((state: ReduxState) =>
-    getInProgress(state, actions.userSignupBegin.type),
+    getInProgress(state, actions.userSignupBegin),
   );
 
   const dispatch = useDispatch();

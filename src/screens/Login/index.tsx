@@ -18,11 +18,11 @@ export default function LoginScreen({navigation}: Props) {
   const dispatch = useDispatch();
 
   const inProgress = useSelector((state: ReduxState) =>
-    getInProgress(state, actions.userSigninBegin.type),
+    getInProgress(state, actions.userSigninBegin),
   );
 
   const error = useSelector((state: ReduxState) =>
-    getError(state, actions.userSigninBegin.type),
+    getError(state, actions.userSigninBegin),
   );
 
   const handleSubmit = () => {

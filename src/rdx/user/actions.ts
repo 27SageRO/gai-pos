@@ -18,14 +18,6 @@ const putUserProfileSuccess = createAction<
   Pick<UserProfile, 'cashierName' | 'vatRegTin'>
 >('pust/user/profile/success');
 
-export type UserLogout = ReturnType<typeof userLogout>;
-export type UserSignupBegin = ReturnType<typeof userSignupBegin>;
-export type UserSignupSuccess = ReturnType<typeof userSignupSuccess>;
-export type UserSigninBegin = ReturnType<typeof userSigninBegin>;
-export type UserSigninSuccess = ReturnType<typeof userSigninSuccess>;
-export type PutUserProfileBegin = ReturnType<typeof putUserProfileBegin>;
-export type PutUserProfileSuccess = ReturnType<typeof putUserProfileSuccess>;
-
 export default {
   userLogout,
   userSignupBegin,
